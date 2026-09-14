@@ -1,0 +1,79 @@
+package main
+
+import "fmt"
+
+func charToValue(c byte) int {
+	if c >= '0' && c <= '9' {
+		return int(c - '0')
+	} else if c >= 'A' && c <= 'Z' {
+		return 10 + int(c-'A')
+	} else if c >= 'a' && c <= 'z' {
+		return 10 + int(c-'a')
+	}
+	return 0
+}
+
+func valueToChar(value int) byte {
+	if value >= 0 && value <= 9 {
+		return '0' + byte(value)
+	} else if value >= 10 && value <= 35 {
+		return 'A' + byte(value-10)
+	}
+	return '0'
+}
+
+func toDecimal(number string, fromBase int) int64 {
+	var result int64 = 0
+	var power int64 = 1
+	for i := len(number) - 1; i >= 0; i-- {
+		digit := charToValue(number[i])
+		result += int64(digit) * power
+		power *= int64(fromBase)
+	}
+	return result
+}
+
+func reverseString(s string) string {
+	runes := []rune(s)
+	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+		runes[i], runes[j] = runes[j], runes[i]
+	}
+	return string(runes)
+}
+
+func fromDecimal(decimalNumber int64, toBase int) string {
+	if decimalNumber == 0 {
+		return "0"
+	}
+	var result string
+	isNegative := false
+	if decimalNumber < 0 {
+		isNegative = true
+		decimalNumber = -decimalNumber
+	}
+	for decimalNumber > 0 {
+		remainder := int(decimalNumber % int64(toBase))
+		result += string(valueToChar(remainder))
+		decimalNumber /= int64(toBase)
+	}
+	if isNegative {
+		result += "-"
+	}
+	return reverseString(result)
+}
+
+func convertBase(number string, fromBase int, toBase int) string {
+	if fromBase == toBase {
+		return number
+	}
+	decimal := toDecimal(number, fromBase)
+	return fromDecimal(decimal, toBase)
+}
+
+func main() {
+	number := "1022"
+	fromBase := 3
+	toBase := 10
+	result := convertBase(number, fromBase, toBase)
+	fmt.Println(result)
+}
