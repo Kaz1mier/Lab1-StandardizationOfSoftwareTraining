@@ -1,7 +1,8 @@
 # 💻 Лабораторная работа №1 по предмету "Стандартизация Программного Обеспечения"
 **Программа рассчёта метрики Холстеда языка "GO"**
 
-[![Скачать](https://shields.io)](https://github.com/Kaz1mier/Lab1-StandardizationOfSoftwareTraining/releases/download/v1.0/Lab1.exe) 
+> ### 📥 [Скачать программу (.exe)](https://github.com/Kaz1mier/Lab1-StandardizationOfSoftwareTraining/releases/download/v1.0/Lab1.exe) 
+
 ---
 
 ## 📋 О проекте
