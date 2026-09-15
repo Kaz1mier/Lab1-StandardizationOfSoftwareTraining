@@ -1,9 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 public enum FileReadErrorCode
 {
@@ -65,7 +60,7 @@ internal class Parser
     }
 
 
-public Dictionary<string, int> CountOperators()
+    public Dictionary<string, int> CountOperators()
     {
         var ops = new Dictionary<string, int>();
 
@@ -74,6 +69,7 @@ public Dictionary<string, int> CountOperators()
             @"""[^""]*""|'[^']+'",
             " "
         );
+        int allCommaCount = Regex.Matches(workText, @",").Count;
 
         workText = Regex.Replace(
             workText,
@@ -132,10 +128,6 @@ public Dictionary<string, int> CountOperators()
                 ops[kw] = count;
             }
         }
-
-        // ---------------------------------------------------------
-        // Составные операторы
-        // ---------------------------------------------------------
 
         var compound = new (string sym, string pattern)[]
         {
@@ -255,8 +247,8 @@ public Dictionary<string, int> CountOperators()
 
 
         int openBrackets = Regex.Matches(
-            workText,
-            @"\["
+        workText,
+        @"\["
         ).Count;
 
         int closeBrackets = Regex.Matches(
@@ -272,9 +264,9 @@ public Dictionary<string, int> CountOperators()
         }
 
         int openRound = Regex.Matches(
-            workText,
-            @"\("
-        ).Count;
+    workText,
+    @"\("
+).Count;
 
         int closeRound = Regex.Matches(
             workText,
@@ -292,19 +284,19 @@ public Dictionary<string, int> CountOperators()
 
         var singles = new (string sym, string pattern)[]
         {
-        ("=", @"(?<![:!=<>])=(?![=])"),
-        ("<", @"<(?![=])"),
-        (">", @">(?![=])"),
-        ("+", @"\+(?![+=])"),
-        ("-", @"-(?![=-])"),
-        ("*", @"\*(?![=])"),
-        ("/", @"/(?![=])"),
-        ("%", @"%(?![=])"),
-        ("&&", @"&&"),
-        ("||", @"\|\|"),
-        ("!", @"!(?![=])"),
-        (",", @","),
-        (";", @";")
+            ("=", @"(?<![:!=<>])=(?![=])"),
+            ("<", @"<(?![=])"),
+            (">", @">(?![=])"),
+            ("+", @"\+(?![+=])"),
+            ("-", @"-(?![=-])"),
+            ("*", @"\*(?![=])"),
+            ("/", @"/(?![=])"),
+            ("%", @"%(?![=])"),
+            ("&&", @"&&"),
+            ("||", @"\|\|"),
+            ("!", @"!(?![=])"),
+            (",", @","),
+            (";", @";")
         };
 
         foreach (var (sym, pattern) in singles)
@@ -320,8 +312,14 @@ public Dictionary<string, int> CountOperators()
             }
         }
 
+        if (allCommaCount > 0)
+        {
+            ops[","] = allCommaCount;
+        }
+
         return ops;
     }
+
 
 
     public Dictionary<string, int> CountOperands()
