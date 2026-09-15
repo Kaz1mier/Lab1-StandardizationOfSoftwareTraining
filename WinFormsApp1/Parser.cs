@@ -101,12 +101,7 @@ public Dictionary<string, int> CountOperators()
 
         if (ifElseCount > 0)
         {
-            ops["if..else"] = ifElseCount;
-        }
-
-        if (standaloneIfCount > 0)
-        {
-            ops["if"] = standaloneIfCount;
+            ops["if"] = ifElseCount + standaloneIfCount;
         }
 
         if (standaloneElseCount > 0)
