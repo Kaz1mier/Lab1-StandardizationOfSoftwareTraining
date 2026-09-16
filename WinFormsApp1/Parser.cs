@@ -372,6 +372,12 @@ internal class Parser
 
         operandText = Regex.Replace(
             operandText,
+            @"\bpackage\s+[A-Za-z_]\w*",
+            " "
+        );
+
+        operandText = Regex.Replace(
+            operandText,
             @"\b(?<name>[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)\s*\(",
             " "
         );
