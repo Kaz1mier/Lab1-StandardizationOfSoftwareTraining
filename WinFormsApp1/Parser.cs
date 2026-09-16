@@ -97,12 +97,7 @@ internal class Parser
 
         if (ifElseCount > 0)
         {
-            ops["if"] = ifElseCount + standaloneIfCount;
-        }
-
-        if (standaloneElseCount > 0)
-        {
-            ops["else"] = standaloneElseCount;
+            ops["if..(else)"] = ifElseCount + standaloneIfCount;
         }
 
         string[] keywords =
